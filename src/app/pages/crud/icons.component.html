@@ -1,0 +1,56 @@
+<!-- icons.component.html -->
+
+<h1>Todo List</h1>
+
+<form [formGroup]="todoForm" (ngSubmit)="createTodo()">
+  <div>
+    <label class="mr-6">Title :</label>
+    <input class="input-title" type="text" formControlName="title" />
+    <div
+      *ngIf="todoForm.get('title').invalid && todoForm.get('title').touched"
+      class="error"
+    >
+      Title is required
+    </div>
+  </div>
+  <div>
+    <label class="mr-1">Completed :</label>
+    <input type="checkbox" formControlName="completed" />
+  </div>
+  <button type="submit">Add Todo</button>
+</form>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" (click)="sortTable('id')">No</th>
+      <th scope="col" (click)="sortTable('title')">Title</th>
+      <th scope="col" (click)="sortTable('completed')">Completed</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let todo of todos">
+      <th scope="row">{{ todo.id }}</th>
+      <td>{{ todo.title }}</td>
+      <td>{{ todo.completed ? "Yes" : "No" }}</td>
+      <td>
+        <button (click)="deleteTodo(todo.id)" class="btn btn-danger">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="pagination">
+  <div class="items-per-page">
+    Show:
+    <select [(ngModel)]="itemsPerPage" (change)="changeItemsPerPage()">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="15">15</option>
+      <option value="all">All</option>
+    </select>
+  </div>
+</div>
